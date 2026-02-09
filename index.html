@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>For My Valentine ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ff4e8b, #ff9a9e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.18);
+      padding: 28px;
+      border-radius: 22px;
+      backdrop-filter: blur(10px);
+      max-width: 400px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+      animation: fadeIn 1.5s ease;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 12px;
+    }
+
+    p {
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 18px;
+    }
+
+    input {
+      padding: 10px;
+      width: 100%;
+      border-radius: 20px;
+      border: none;
+      text-align: center;
+      font-size: 15px;
+      margin-bottom: 15px;
+    }
+
+    button {
+      background: white;
+      color: #ff3d7f;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 30px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: transform 0.2s;
+      margin: 5px;
+    }
+
+    button:hover {
+      transform: scale(1.08);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .heart {
+      position: fixed;
+      top: -10px;
+      font-size: 18px;
+      animation: fall linear infinite;
+      opacity: 0.9;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- PASSWORD SCREEN -->
+<div class="card" id="lock">
+  <h1>❤️ Private Surprise ❤️</h1>
+  <button onclick="viewSurprise()">Enter 💖</button>
+</div>
+
+<div class="card hidden" id="beforeMain">
+    <h1>Hey Love! 💕</h1>
+    <p>
+        I have a special surprise for you...  
+        But it's locked with a password!  
+        Can you guess it? 🤔
+    </p>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="card hidden" id="main">
+  <h1>Happy Valentine’s Day ❤️</h1>
+
+  <p>
+    Naa jeevitham lo chala mandi vacharu… vellaru…  
+    <br><br>
+    Kaani <b>nuvvu maatram naa life ni complete chesavu</b> 💕
+  </p>
+
+  <p class="hidden" id="proposal">
+    Naa navvu ki kaaranam nuvvu…  
+    Naa strength ki reason nuvvu…  
+    <br><br>
+    Ee janma lo naa wife ga vachinanduku  
+    <b>thank you bangaram ❤️</b>
+    <br><br>
+    <b>Will you be my Valentine forever? 💍</b>
+  </p>
+
+  <div id="actions">
+    <button onclick="startLove()">Tap here ❤️</button>
+  </div>
+</div>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+  <!-- Replace with any Telugu romantic mp3 URL if you want -->
+  <source src="Inthandham.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const WEDDING_DATE = "17122023"; // 🔴 CHANGE THIS
+
+  function viewSurprise(){
+    document.getElementById("lock").classList.add("hidden");
+    document.getElementById("beforeMain").classList.remove("hidden");
+    document.getElementById("beforeMain").innerHTML += `  
+      <input id="pwd" placeholder="Example: 14022024" />
+      <button onclick="unlock()">Unlock 💖</button>
+    `;
+  }
+
+  function unlock() {
+    const val = document.getElementById("pwd").value;
+    document.getElementById("music").play();
+    if (val === WEDDING_DATE) {
+      document.getElementById("beforeMain").classList.add("hidden");
+      document.getElementById("main").classList.remove("hidden");
+    } else {
+      alert("Hint: Our special day 💕");
+    }
+  }
+
+  function startLove() {
+    document.getElementById("proposal").classList.remove("hidden");
+    document.getElementById("actions").innerHTML =
+      `<button onclick="accept()">Yes ❤️</button>
+       <button id="noBtn" onclick="changeNoText()">No 🙃</button>`;
+  }
+
+  function accept() {
+    document.getElementById("actions").innerHTML =
+      `<h2>Forever Starts Again ❤️♾️</h2>`;
+  }
+
+  const noTexts = [
+    "No 🙃",
+    "Are you sure? 😜",
+    "Think again ❤️",
+    "Nice try 😏",
+    "Almost 😉",
+    "Answer telusu kada 😘",
+    "Enduku ala 😆",
+    "Haha no 😜",
+    "Try once more 😄",
+    "You know it’s Yes 💖"
+  ];
+
+  let noClickCount = 0;
+
+  function changeNoText() {
+    const noBtn = document.getElementById("noBtn");
+    noBtn.innerText = noTexts[noClickCount % noTexts.length];
+    noClickCount++;
+  }
+
+  // Falling hearts
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerText = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 5000);
+  }, 250);
+</script>
+
+</body>
+</html>
